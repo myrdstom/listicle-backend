@@ -1,0 +1,42 @@
+{
+  "name": "authors-haven-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "env-cmd -f ./config/dev.env  node src/index.js",
+    "dev": "env-cmd -f ./config/dev.env  nodemon src/index.js",
+    "test": "env-cmd -f ./config/test.env jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myrdstom/authors-haven-backend.git"
+  },
+  "author": "Paul Kayongo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/myrdstom/authors-haven-backend/issues"
+  },
+  "homepage": "https://github.com/myrdstom/authors-haven-backend#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^9.4.1"
+  },
+  "devDependencies": {
+    "env-cmd": "^9.0.3",
+    "jest": "^24.8.0",
+    "nodemon": "^1.18.11",
+    "prettier": "^1.17.0",
+    "supertest": "^4.0.2"
+  }
+}
