@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../../../../app");
 const User = require("../../../../models/User");
+const mongoose = require('mongoose');
 
 describe("Tests for user registration", () => {
   process.env.API_BASE = "/api";
@@ -18,6 +19,10 @@ describe("Tests for user registration", () => {
         lastName: "Kayongo"
       });
   });
+  afterAll(async (done) =>{
+    mongoose.connection.close(done)
+  });
+
 
   it("Should return an error when a user tries to register  with as an existing email", async () => {
     const response = await request(app)
