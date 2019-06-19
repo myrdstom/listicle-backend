@@ -6,7 +6,8 @@
   "scripts": {
     "start": "env-cmd -f ./config/dev.env  node src/index.js",
     "dev": "env-cmd -f ./config/dev.env  nodemon src/index.js",
-    "test": "env-cmd -f ./config/test.env jest"
+    "test": "env-cmd -f ./config/test.env jest --detectOpenHandles",
+    "travis": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "validator": "^9.4.1"
   },
   "devDependencies": {
+    "coveralls": "^3.0.4",
     "env-cmd": "^9.0.3",
     "jest": "^24.8.0",
     "nodemon": "^1.18.11",

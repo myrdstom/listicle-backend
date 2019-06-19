@@ -1,24 +1,31 @@
 const request = require("supertest");
 const app = require("../../../app");
 const User = require("../../../models/User");
+const mongoose = require('mongoose');
 
-const userOne = {
-  username: "myrdstom",
-  email: "nserekopaul@gmail.com",
-  password: "P@ssw0rd",
-  firstName: "Paul",
-  lastName: "Kayongo"
-};
 
-describe("Tests for validating registration data", () => {
+
+describe("Tests for user registration", () => {
   process.env.API_BASE = "/api";
   const apiBase = process.env.API_BASE + "/users";
 
   beforeEach(async () => {
     await User.deleteMany();
-    await new User(userOne).save();
+    await request(app)
+      .post(apiBase + "/register")
+      .send({
+        username: "myrdstom",
+        email: "nserekopaul@gmail.com",
+        password: "password",
+        firstName: "Paul",
+        lastName: "Kayongo"
+      });
   });
-  it("Should return an error when a user tries to register  with as an existing email", async () => {
+  afterAll(async (done) =>{
+    await mongoose.connection.close(done)
+  });
+
+  it("Should return an error when a user tries to register  with an invalid username", async () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
