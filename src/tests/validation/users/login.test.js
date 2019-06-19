@@ -23,7 +23,6 @@ describe("Tests for user registration", () => {
     mongoose.connection.close(done)
   });
 
-
   it("Should return an error when a user tries to login  without an email", async () => {
     const response = await request(app)
       .post(apiBase + "/login")
@@ -34,5 +33,40 @@ describe("Tests for user registration", () => {
       .expect(400);
     expect(response.body.email[0]).toBe("Email is invalid");
   });
+
+  it("Should return an error when a user tries to login  without a password", async () => {
+    const response = await request(app)
+      .post(apiBase + "/login")
+      .send({
+        email: "paul",
+      })
+      .expect(400);
+    expect(response.body.password[0]).toBe("Password is required");
+  });
+
+  it("Should return an error when a user tries to login  with non-existent credentials", async () => {
+    const response = await request(app)
+      .post(apiBase + "/login")
+      .send({
+        email: "jlule@gmail.com",
+        password:"password"
+
+      })
+      .expect(404);
+    expect(response.body.email).toBe("User not found");
+  });
+
+  it("Should return an error when a user tries to login  with a wrong password", async () => {
+    const response = await request(app)
+      .post(apiBase + "/login")
+      .send({
+        email: "nserekopaul@gmail.com",
+        password:"password2"
+
+      })
+      .expect(400);
+    expect(response.body.password).toBe("Password incorrect");
+  });
+
 
 });
