@@ -14,7 +14,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "nserekopaul@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "Paul",
         lastName: "Kayongo"
       });
@@ -23,7 +24,7 @@ describe("Tests for user registration", () => {
     mongoose.connection.close(done)
   });
 
-  it("Should return an error when a user tries to login  without an email", async () => {
+  it("Should return an error when a user tries to login  with an invalid email", async () => {
     const response = await request(app)
       .post(apiBase + "/login")
       .send({

@@ -3,8 +3,6 @@ const app = require("../../../app");
 const User = require("../../../models/User");
 const mongoose = require('mongoose');
 
-
-
 describe("Tests for user registration", () => {
   process.env.API_BASE = "/api";
   const apiBase = process.env.API_BASE + "/users";
@@ -22,7 +20,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "m",
         email: "nserekopaull@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "Paul",
         lastName: "Kayongo"
       })
@@ -35,7 +34,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "nserekopaull@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "Paul",
         lastName: "K"
       })
@@ -49,7 +49,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "nserekopaull@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "P",
         lastName: "Kayongo"
       })
@@ -63,7 +64,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "nserekopaull@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         lastName: "Kayongo"
       })
       .expect(400);
@@ -76,7 +78,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "nserekopaull@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "Kayongo"
       })
       .expect(400);
@@ -89,8 +92,9 @@ describe("Tests for user registration", () => {
       .send({
         username: "",
         email: "nserekopaull@gmail.com",
-        password: "password",
-        firstName: "Kayongo",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
+        firstName: "Paul",
         lastName: "Kayongo"
       })
       .expect(400);
@@ -102,8 +106,9 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "email",
-        password: "password",
-        firstName: "Kayongo",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
+        firstName: "Paul",
         lastName: "Kayongo"
       })
       .expect(400);
@@ -116,11 +121,26 @@ describe("Tests for user registration", () => {
         username: "myrdstom",
         email: "email@gmail.com",
         password: "",
-        firstName: "Kayongo",
+        firstName: "Paul",
         lastName: "Kayongo"
       })
       .expect(400);
     expect(response.body.password[0]).toBe("Password is required");
+  });
+
+  it("Should return an error when a user tries to register  with the'password' and 'confirmPassword' fields not matching", async () => {
+    const response = await request(app)
+      .post(apiBase + "/register")
+      .send({
+        username: "myrdstom",
+        email: "email@gmail.com",
+        password: "P@ssw0rd",
+        confirmPassword:"",
+        firstName: "Paul",
+        lastName: "Kayongo"
+      })
+      .expect(400);
+    expect(response.body.confirmPassword[0]).toBe("Passwords must match");
   });
 
 });

@@ -14,7 +14,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "nserekopaul@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "Paul",
         lastName: "Kayongo"
       });
@@ -30,7 +31,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "myrdstom",
         email: "nserekopaull@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "Paul",
         lastName: "Kayongo"
       })
@@ -44,7 +46,8 @@ describe("Tests for user registration", () => {
       .send({
         username: "bgpeter",
         email: "peter@gmail.com",
-        password: "password",
+        password: "P@ssw0rd",
+        confirmPassword: "P@ssw0rd",
         firstName: "Peter",
         lastName: "Busulwa"
       })
@@ -57,7 +60,7 @@ describe("Tests for user registration", () => {
       .post(apiBase + "/login")
       .send({
         email: "nserekopaul@gmail.com",
-        password: "password"
+        password: "P@ssw0rd"
       })
       .expect(200);
     expect(response.body.success).toBe(true);
