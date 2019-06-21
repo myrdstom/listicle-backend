@@ -99,7 +99,6 @@ router.get(
   passport.authenticate("jwt", { session: false }, null),
   (req, res) => {
     res.json({
-      id: req.user.id,
       email: req.user.email,
       msg: "success"
     });
