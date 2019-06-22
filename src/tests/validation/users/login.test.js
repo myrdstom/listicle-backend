@@ -12,7 +12,6 @@ describe("Tests for user registration", () => {
     await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "myrdstom",
         email: "nserekopaul@gmail.com",
         password: "P@ssw0rd",
         confirmPassword: "P@ssw0rd",

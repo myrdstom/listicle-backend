@@ -20,20 +20,13 @@ router.post("/register", (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
- return res.status(400).json({ email: ["Email already exists"] });
-    }
-  });
-  User.findOne({ username: req.body.username }).then(user => {
-    if (user) {
-      return res.status(400).json({ username: ["Username already exists"] });
+      return res.status(400).json({ email: ["Email already exists"] });
     } else {
       const newUser = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        username: req.body.username,
         email: req.body.email,
         password: req.body.password
       });
@@ -107,7 +100,6 @@ router.get(
   (req, res) => {
     res.json({
       id: req.user.id,
-      username: req.user.username,
       email: req.user.email,
       msg: "success"
     });

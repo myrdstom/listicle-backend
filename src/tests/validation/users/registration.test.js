@@ -14,25 +14,10 @@ describe("Tests for user registration", () => {
     await mongoose.connection.close(done)
   });
 
-  it("Should return an error when a user tries to register  with an invalid username", async () => {
-    const response = await request(app)
-      .post(apiBase + "/register")
-      .send({
-        username: "m",
-        email: "nserekopaull@gmail.com",
-        password: "P@ssw0rd",
-        confirmPassword: "P@ssw0rd",
-        firstName: "Paul",
-        lastName: "Kayongo"
-      })
-      .expect(400);
-    expect(response.body.username[0]).toBe("Username must be between 2 and 30 characters");
-  });
   it("Should return an error when a user tries to register  with an invalid Last Name", async () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "myrdstom",
         email: "nserekopaull@gmail.com",
         password: "P@ssw0rd",
         confirmPassword: "P@ssw0rd",
@@ -47,7 +32,6 @@ describe("Tests for user registration", () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "myrdstom",
         email: "nserekopaull@gmail.com",
         password: "P@ssw0rd",
         confirmPassword: "P@ssw0rd",
@@ -62,7 +46,6 @@ describe("Tests for user registration", () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "myrdstom",
         email: "nserekopaull@gmail.com",
         password: "P@ssw0rd",
         confirmPassword: "P@ssw0rd",
@@ -76,7 +59,6 @@ describe("Tests for user registration", () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "myrdstom",
         email: "nserekopaull@gmail.com",
         password: "P@ssw0rd",
         confirmPassword: "P@ssw0rd",
@@ -86,25 +68,10 @@ describe("Tests for user registration", () => {
     expect(response.body.lastName[0]).toBe("Last Name is required");
   });
 
-  it("Should return an error when a user tries to register  with an empty 'username' field", async () => {
+  it("Should return an error when a user tries to register  with an invalid 'email' field", async () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "",
-        email: "nserekopaull@gmail.com",
-        password: "P@ssw0rd",
-        confirmPassword: "P@ssw0rd",
-        firstName: "Paul",
-        lastName: "Kayongo"
-      })
-      .expect(400);
-    expect(response.body.username[0]).toBe("Username is required");
-  });
-  it("Should return an error when a user tries to register  with an empty 'email' field", async () => {
-    const response = await request(app)
-      .post(apiBase + "/register")
-      .send({
-        username: "myrdstom",
         email: "email",
         password: "P@ssw0rd",
         confirmPassword: "P@ssw0rd",
@@ -118,7 +85,6 @@ describe("Tests for user registration", () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "myrdstom",
         email: "email@gmail.com",
         password: "",
         firstName: "Paul",
@@ -132,7 +98,20 @@ describe("Tests for user registration", () => {
     const response = await request(app)
       .post(apiBase + "/register")
       .send({
-        username: "myrdstom",
+        email: "email@gmail.com",
+        password: "P@ssw0rd",
+        confirmPassword:"",
+        firstName: "Paul",
+        lastName: "Kayongo"
+      })
+      .expect(400);
+    expect(response.body.confirmPassword[0]).toBe("Passwords must match");
+  });
+
+  it("Should return an error when a user tries to register  with the'password' and 'confirmPassword' fields not matching", async () => {
+    const response = await request(app)
+      .post(apiBase + "/register")
+      .send({
         email: "email@gmail.com",
         password: "P@ssw0rd",
         confirmPassword:"",
