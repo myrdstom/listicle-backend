@@ -31,11 +31,11 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }, null),
   (req, res) => {
-      const {errors, isValid} = ValidateProfileInput(req.body);
-      //Check Validation
-      if(!isValid){
-          return res.status(400).json(errors)
-      }
+    const { errors, isValid } = ValidateProfileInput(req.body);
+    //Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
@@ -53,8 +53,8 @@ router.post(
         Profile.findOneAndUpdate(
           { user: req.user.id },
           { $set: profileFields },
-          { new: true }
-        );
+          { new: true, useFindAndModify: false }
+        ).then(profile => res.json(profile));
       } else {
         // Create
 
