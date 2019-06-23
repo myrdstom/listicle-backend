@@ -3,7 +3,7 @@ const app = require("../../../app");
 const User = require("../../../models/User");
 const mongoose = require('mongoose');
 
-describe("Tests for user registration", () => {
+describe("Tests for validating the user registration data", () => {
   process.env.API_BASE = "/api";
   const apiBase = process.env.API_BASE + "/users";
 

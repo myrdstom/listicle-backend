@@ -4,11 +4,8 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const keys = process.env;
 const passport = require("passport");
-
-// Load input validation
 const validateRegisterInput = require("../../../validation/users/registration");
 const validateLoginInput = require("../../../validation/users/login");
-// Load User model
 const User = require("../../../models/User");
 
 //@route    GET api/users/register
@@ -57,10 +54,7 @@ router.post('/login', async (req, res) => {
 
   const email = req.body.email;
   const password = req.body.password;
-
-  // Find user by email
   await User.findOne({ email }).then(user => {
-    // Check for user
     if (!user) {
       errors.email = 'User not found';
       return res.status(404).json(errors);
@@ -69,8 +63,8 @@ router.post('/login', async (req, res) => {
     // Check Password
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        // User Matched
-        const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
+        // Password Matched
+        const payload = { id: user.id, email: user.email}; // Create JWT Payload
 
         // Sign Token
         jwt.sign(
