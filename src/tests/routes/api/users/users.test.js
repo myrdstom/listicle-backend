@@ -1,13 +1,16 @@
+import 'babel-polyfill';
 const request = require('supertest');
-const app = require('../../../../app');
-const User = require('../../../../models/User');
+import { app } from '../../../../app';
+import UserSchema from '../../../../models/User';
+const User = UserSchema;
+
 const mongoose = require('mongoose');
 
 describe('Tests for user registration', () => {
   process.env.API_BASE = '/api';
   const apiBase = process.env.API_BASE + '/users';
 
-  beforeEach(async () => {
+  beforeEach(async done => {
     await User.deleteMany();
     await request(app)
       .post(apiBase + '/register')
@@ -18,6 +21,7 @@ describe('Tests for user registration', () => {
         firstName: 'Paul',
         lastName: 'Kayongo'
       });
+    done();
   });
   afterAll(async done => {
     mongoose.connection.close(done);
@@ -63,7 +67,7 @@ describe('Tests for user registration', () => {
   });
 
   it('Should return the logged in user ', async () => {
-    res = await request(app)
+    const res = await request(app)
       .post(apiBase + '/login')
       .send({
         email: 'nserekopaul@gmail.com',

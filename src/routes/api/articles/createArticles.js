@@ -8,4 +8,4 @@ const router = express.Router();
 */
 router.get('/test', (req, res) => res.json({ msg: 'articles works' }));
 
-module.exports = router;
+export {router as articleRouter}

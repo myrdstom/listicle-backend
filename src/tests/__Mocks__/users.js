@@ -1,0 +1,4 @@
+export const accessToken = {
+    "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkMGRjYmY2M2FmYTcwYWIzNGMwMzQwNSIsImVtYWlsIjoibnNlcmVrb3BhdWxAZ21haWwuY29tIiwiaWF0IjoxNTYyMzQ2NzgzLCJleHAiOjE1NjIzNTAzODN9.N-OEm9tacsZHvwtAuHKIlIJlllQiTQ39Yp4e4R17dCs"
+
+};

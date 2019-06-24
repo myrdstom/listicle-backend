@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 const passport = require('passport');
 const ValidateProfileInput = require('../../../validation/profile/profile');
-const Profile = require('../../../models/Profile');
+import ProfileSchema from '../../../models/Profile';
+const Profile = ProfileSchema;
 
 //@route    GET api/profile/
 // @desc    Get current user's profile
@@ -74,4 +75,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export { router as profileRouter };

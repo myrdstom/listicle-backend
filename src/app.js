@@ -1,13 +1,13 @@
 // app.js
 
-const express = require('express');
+import express from 'express';
 require('./db/mongoose');
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 const passport = require('passport');
 
-const users = require('./routes/api/users/users');
-const profile = require('./routes/api/profile/profile');
-const articles = require('./routes/api/articles/createArticles');
+import { userRouter } from './routes/api/users/users';
+import { profileRouter } from './routes/api/profile/profile';
+import { articleRouter } from './routes/api/articles/createArticles';
 
 const app = express();
 
@@ -22,8 +22,8 @@ app.use(passport.initialize());
 require('./utils/passport')(passport);
 
 // Use Routes
-app.use('/api/users', users);
-app.use('/api/profile', profile);
-app.use('/api/articles', articles);
+app.use('/api/users', userRouter);
+app.use('/api/profile', profileRouter);
+app.use('/api/articles', articleRouter);
 
-module.exports = app;
+export { app };

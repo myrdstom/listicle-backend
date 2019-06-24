@@ -1,13 +1,14 @@
-/* eslint-disable no-undef */
-const express = require('express');
-const bcrypt = require('bcryptjs');
+import express from 'express';
+import bcrypt from 'bcryptjs';
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+import jsonwebtoken from 'jsonwebtoken';
+const jwt = jsonwebtoken;
 const keys = process.env;
 const passport = require('passport');
 const validateRegisterInput = require('../../../validation/users/registration');
 const validateLoginInput = require('../../../validation/users/login');
-const User = require('../../../models/User');
+import UserSchema from '../../../models/User';
+const User = UserSchema;
 
 //@route    GET api/users/register
 // @desc    Register route
@@ -37,7 +38,7 @@ router.post('/register', (req, res) => {
             .then(user =>
               res
                 .status(201)
-                .json({ user, msg: 'You have successfully registered a user' })
+                .json({ user, msg: 'You have succesfully registered a user' })
             )
             // eslint-disable-next-line no-console
             .catch(err => console.log(err));
@@ -105,4 +106,4 @@ router.get(
   }
 );
 
-module.exports = router;
+export { router as userRouter };

@@ -1,6 +1,8 @@
+import 'babel-polyfill';
 const request = require('supertest');
-const app = require('../../../app');
-const User = require('../../../models/User');
+import { app } from '../../../app';
+import UserSchema from '../../../models/User';
+const User = UserSchema;
 const mongoose = require('mongoose');
 
 describe('Tests for validating the login data', () => {
