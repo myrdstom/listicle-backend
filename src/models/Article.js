@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
 //Create Schema
@@ -7,7 +9,7 @@ const ArticleSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  Title: {
+  title: {
     type: String,
     required: true,
     max: 40
@@ -15,8 +17,45 @@ const ArticleSchema = new Schema({
   description: {
     type: String
   },
-  Body: {
+  body: {
+    type: String,
+    required: true
+  },
+  articleSlug:{
+    type: String,
+    slug: "title",
+    unique: true
+  },
+  author:{
     type: String
+  },
+  likes:[
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+      }
+    }
+  ],
+  comments: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+      },
+      body: {
+        type: String,
+        required: true
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 
