@@ -10,6 +10,7 @@ node_modules/
 # misc
 yarn.lock
 yarn-error.log
+package-lock.json
 
 # IDE settings
 .idea

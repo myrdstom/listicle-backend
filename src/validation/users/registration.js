@@ -2,7 +2,7 @@ const Validator = require("validator");
 const isEmpty = require("../isEmpty");
 // Validator library only works with string so so magic goes into making it work with non string types
 
-const regex =  /^(?=(.*[\W]){1,})(?=(.*?[A-Z]){1,})(?!.*\s).{7,32}$/;
+const regex =  /^(?=(.*[\W])+)(?=(.*?[A-Z])+)(?!.*\s).{7,32}$/;
 
 module.exports = function validateRegisterInput(data) {
   let errors = {};
