@@ -1,21 +1,21 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const passport = require("passport");
-const ValidateProfileInput = require("../../../validation/profile/profile");
-const Profile = require("../../../models/Profile");
+const passport = require('passport');
+const ValidateProfileInput = require('../../../validation/profile/profile');
+const Profile = require('../../../models/Profile');
 
 //@route    GET api/profile/
 // @desc    Get current user's profile
 // @access  Private
 router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }, null),
+  '/',
+  passport.authenticate('jwt', { session: false }, null),
   (req, res) => {
     const errors = {};
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (!profile) {
-          errors.error = "There is no profile for this user";
+          errors.error = 'There is no profile for this user';
           return res.status(404).json(errors);
         }
         res.json(profile);
@@ -28,8 +28,8 @@ router.get(
 // @desc    Create and Edit current user's profile
 // @access  Private
 router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }, null),
+  '/',
+  passport.authenticate('jwt', { session: false }, null),
   (req, res) => {
     const { errors, isValid } = ValidateProfileInput(req.body);
     //Check Validation
@@ -61,7 +61,7 @@ router.post(
         // Check if username exists
         Profile.findOne({ username: profileFields.username }).then(profile => {
           if (profile) {
-            errors.username = "That username already exists";
+            errors.username = 'That username already exists';
             res.status(400).json(errors);
           }
           // Save profile
