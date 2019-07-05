@@ -1,17 +1,18 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
+/* eslint-disable no-undef */
+const express = require('express');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 const keys = process.env;
-const passport = require("passport");
-const validateRegisterInput = require("../../../validation/users/registration");
-const validateLoginInput = require("../../../validation/users/login");
-const User = require("../../../models/User");
+const passport = require('passport');
+const validateRegisterInput = require('../../../validation/users/registration');
+const validateLoginInput = require('../../../validation/users/login');
+const User = require('../../../models/User');
 
 //@route    GET api/users/register
 // @desc    Register route
 // @access  Public
-router.post("/register", (req, res) => {
+router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
@@ -19,7 +20,7 @@ router.post("/register", (req, res) => {
   }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: ["Email already exists"] });
+      return res.status(400).json({ email: ['Email already exists'] });
     } else {
       const newUser = new User({
         firstName: req.body.firstName,
@@ -33,7 +34,12 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.status(201).json({user, msg:'You have succesfully registered a user'}))
+            .then(user =>
+              res
+                .status(201)
+                .json({ user, msg: 'You have successfully registered a user' })
+            )
+            // eslint-disable-next-line no-console
             .catch(err => console.log(err));
         });
       });
@@ -64,7 +70,7 @@ router.post('/login', async (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // Password Matched
-        const payload = { id: user.id, email: user.email}; // Create JWT Payload
+        const payload = { id: user.id, email: user.email }; // Create JWT Payload
 
         // Sign Token
         jwt.sign(
@@ -89,12 +95,12 @@ router.post('/login', async (req, res) => {
 // @desc    Return current user
 // @access  Private
 router.get(
-  "/current",
-  passport.authenticate("jwt", { session: false }, null),
+  '/current',
+  passport.authenticate('jwt', { session: false }, null),
   (req, res) => {
     res.json({
       email: req.user.email,
-      msg: "success"
+      msg: 'success'
     });
   }
 );

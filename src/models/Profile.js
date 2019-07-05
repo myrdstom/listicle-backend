@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //Create Schema
 const ProfileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "users"
+    ref: 'users'
   },
   username: {
     type: String,
@@ -27,13 +27,12 @@ const ProfileSchema = new Schema({
     },
     Instagram: {
       type: String
-    },
-
+    }
   },
   date: {
     type: Date,
     default: Date.now
-  },
+  }
 });
 
-module.exports = Profile = mongoose.model("profiles", ProfileSchema);
+module.exports = Profile = mongoose.model('profiles', ProfileSchema);

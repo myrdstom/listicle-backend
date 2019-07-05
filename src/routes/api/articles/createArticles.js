@@ -6,6 +6,6 @@ const router = express.Router();
 @desc    Tests article route
 @access  Public
 */
-router.get('/test', (req, res) =>res.json({msg: 'articles works'}));
+router.get('/test', (req, res) => res.json({ msg: 'articles works' }));
 
 module.exports = router;
