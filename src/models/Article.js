@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
+require('mongoose-type-url');
 mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
@@ -28,6 +29,9 @@ const ArticleSchema = new Schema({
   },
   author:{
     type: String
+  },
+  avatar:{
+    profile: mongoose.SchemaTypes.Url
   },
   likes:[
     {

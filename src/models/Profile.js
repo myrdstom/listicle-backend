@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+require('mongoose-type-url');
 
 //Create Schema
 const ProfileSchema = new Schema({
@@ -15,8 +16,8 @@ const ProfileSchema = new Schema({
   bio: {
     type: String
   },
-  avatar: {
-    type: String
+  avatar:{
+    profile: mongoose.SchemaTypes.Url
   },
   social: {
     youtube: {
