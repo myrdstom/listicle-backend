@@ -33,14 +33,17 @@ router.post('/register', (req, res) => {
           if (err) throw err;
           newUser.password = hash;
           newUser
-            .save()
-            .then(user =>
-              res
-                .status(201)
-                .json({ user, msg: 'You have successfully registered a user' })
-            )
-            // eslint-disable-next-line no-console
-            .catch(err => console.log(err));
+              .save()
+              .then(user =>
+                  res
+                      .status(201)
+                      .json({
+                          user,
+                          msg: 'You have successfully registered a user',
+                      })
+              )
+              // eslint-disable-next-line no-console
+              .catch(err => console.log(err));
         });
       });
     }

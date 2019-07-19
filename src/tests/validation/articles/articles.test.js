@@ -1,4 +1,3 @@
-
 const request = require('supertest');
 const app = require('../../../app');
 const Article = require('../../../models/Article');
@@ -19,13 +18,13 @@ describe('Tests for validating the create articles feature', () => {
                 password: 'P@ssw0rd',
                 confirmPassword: 'P@ssw0rd',
                 firstName: 'Paul',
-                lastName: 'Kayongo'
+                lastName: 'Kayongo',
             });
         res = await request(app)
             .post(userApiBase + '/login')
             .send({
                 email: 'nserekopaul@gmail.com',
-                password: 'P@ssw0rd'
+                password: 'P@ssw0rd',
             })
             .expect(200);
         access_token = res.body.token;
@@ -37,8 +36,10 @@ describe('Tests for validating the create articles feature', () => {
         const response = await request(app)
             .post(articleApiBase + '/')
             .set('Authorization', `${access_token}`)
-            .send({title:"Javascript", body:"narda", description:"narda"})
+            .send({ title: 'Javascript', body: 'narda', description: 'narda' })
             .expect(400);
-        expect(response.body.description[0]).toBe('Description be between 10 and 100 characters');
+        expect(response.body.description[0]).toBe(
+            'Description be between 10 and 100 characters'
+        );
     });
 });
