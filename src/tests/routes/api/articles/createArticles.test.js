@@ -94,4 +94,28 @@ describe('Tests for validating the create articles feature', () => {
         expect(response.body.error).toBe('This database has no articles');
 
     });
+    it('Should successfully delete an article', async () => {
+        await request(app)
+            .post(articleApiBase + '/')
+            .set('Authorization', `${access_token}`)
+            .send({
+                title:"Javascript",
+                body:"Javascript is an extremely awesome language, I do not know what I would",
+                description:"This is how javascript is amazing"})
+            .expect(201);
+        const response = await request(app)
+            .delete(articleApiBase + '/javascript')
+            .set('Authorization', `${access_token}`)
+            .expect(200);
+        expect(response.body.msg).toBe('Article successfully deleted');
+
+    });
+    it('Should return an error if the user tries to delete a non-existent article', async () => {
+        const response = await request(app)
+            .delete(articleApiBase + '/javascript')
+            .set('Authorization', `${access_token}`)
+            .expect(404);
+        expect(response.body.error).toBe('Article not found');
+
+    });
 });

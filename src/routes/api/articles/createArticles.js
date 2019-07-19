@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const Article =  require('../../../models/Article');
+const Profile =  require('../../../models/Profile');
 const router = express.Router();
 const ValidateArticleInput = require('../../../validation/articles/articles');
 
@@ -39,7 +40,7 @@ router.get('/:articleSlug', async (req, res) => {
         })
 });
 
-//@route    GET api/users/articles
+//@route    POST api/users/articles
 // @desc    Create article
 // @access  Private
 
@@ -53,9 +54,33 @@ router.post('/', passport.authenticate('jwt', {session : false}, null),
         title: req.body.title,
         description: req.body.description,
         body: req.body.body,
-        author: req.body.author
+        author: req.user.firstName + ' ' + req.user.lastName,
+        user: req.user.id
     });
     newArticle.save().then(article => res.status(201).json(article))
+    });
+
+//@route    DELETE api/users/articles/SLUG
+// @desc    DELETE article
+// @access  Private
+
+router.delete('/:articleSlug', passport.authenticate('jwt', {session : false}, null),
+    (req, res) =>{
+    Profile.findOne({user: req.user.id})
+        .then(profile =>{
+            Article.findOne({articleSlug: req.params.articleSlug})
+                .then(article => {
+                    if (!article) {
+                        return res.status(404).json({error: 'Article not found'});
+                    }
+                    if(article.user.toString() !== req.user.id){
+                        return res.status(401).json({error:'User is not authorized'})
+                    }
+                    article.remove()
+                        .then(() => res.status(200).json({msg:'Article successfully deleted'}))
+                })
+        })
+
     });
 
 module.exports = router;
