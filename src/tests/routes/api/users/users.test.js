@@ -35,6 +35,18 @@ describe('Tests for user registration', () => {
             .expect(201);
         expect(response.body.user.email).toBe('peter@gmail.com');
     });
+    it('Should return an error if the user registers with an existing email', async () => {
+        const response = await request(app)
+            .post(apiBase + '/register')
+            .send({
+                username: 'bgpeter',
+                email: 'nserekopaul@gmail.com',
+                password: 'P@ssw0rd',
+                confirmPassword: 'P@ssw0rd',
+            })
+            .expect(400);
+        expect(response.body.email[0]).toBe('Email already exists');
+    });
 
     it('Should log in a registered user', async () => {
         const response = await request(app)

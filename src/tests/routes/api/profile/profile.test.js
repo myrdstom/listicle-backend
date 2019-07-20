@@ -44,7 +44,7 @@ describe('Tests for managing the user profile', () => {
                 youtube: 'https://www.youtube.com/',
                 instagram: 'https://www.instagram.com/',
                 twitter: 'https://www.twitter.com/',
-                avatar: 'https://www.avatar.com/'
+                avatar: 'https://www.avatar.com/',
             })
             .expect(201);
         expect(response.body.bio).toBe('I am an awesome developer');
