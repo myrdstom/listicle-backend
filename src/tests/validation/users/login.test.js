@@ -15,8 +15,6 @@ describe('Tests for validating the login data', () => {
         email: 'nserekopaul@gmail.com',
         password: 'P@ssw0rd',
         confirmPassword: 'P@ssw0rd',
-        firstName: 'Paul',
-        lastName: 'Kayongo'
       });
   });
   afterAll(async done => {
@@ -53,16 +51,5 @@ describe('Tests for validating the login data', () => {
       })
       .expect(404);
     expect(response.body.email).toBe('User not found');
-  });
-
-  it('Should return an error when a user tries to login  with a wrong password', async () => {
-    const response = await request(app)
-      .post(apiBase + '/login')
-      .send({
-        email: 'nserekopaul@gmail.com',
-        password: 'password2'
-      })
-      .expect(400);
-    expect(response.body.password).toBe('Password incorrect');
   });
 });

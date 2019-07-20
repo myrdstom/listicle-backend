@@ -4,12 +4,16 @@ const isEmpty = require('../isEmpty');
 
 module.exports = function validateProfileInput(data) {
     let errors = {};
+    data.firstName = !isEmpty(data.firstName) ? data.firstName : '';
+    data.lastName = !isEmpty(data.lastName) ? data.lastName : '';
 
-    data.username = !isEmpty(data.username) ? data.username : '';
-
-    if (Validator.isEmpty(data.username)) {
-        errors.username = ['Username is required'];
+    if (!Validator.isLength(data.firstName, { min: 2, max: 30 })) {
+        errors.firstName = ['First name must be between 2 and 30 characters'];
     }
+    if (!Validator.isLength(data.lastName, { min: 2, max: 30 })) {
+        errors.lastName = ['Last name must be between 2 and 30 characters'];
+    }
+
     if (!isEmpty(data.youtube)) {
         if (!Validator.isURL(data.youtube)) {
             errors.youtube = ['Youtube field doe not have a valid URL'];

@@ -1,30 +1,37 @@
-/* eslint-disable no-undef */
-const express = require('express');
-const bcrypt = require('bcryptjs');
+const express = require("express");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const keys = process.env;
-const passport = require('passport');
-const validateRegisterInput = require('../../../validation/users/registration');
-const validateLoginInput = require('../../../validation/users/login');
-const User = require('../../../models/User');
+const passport = require("passport");
+
+// Load input validation
+const validateRegisterInput = require("../../../validation/users/registration");
+const validateLoginInput = require("../../../validation/users/login");
+// Load User model
+const User = require("../../../models/User");
 
 //@route    GET api/users/register
 // @desc    Register route
 // @access  Public
-router.post('/register', (req, res) => {
+router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
     return res.status(400).json(errors);
   }
+
+  User.findOne({ username: req.body.username }).then(user => {
+    if (user) {
+      return res.status(400).json({ username: ["Username already exists"] });
+    }
+  });
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: ['Email already exists'] });
+      return res.status(400).json({ email: ["Email already exists"] });
     } else {
       const newUser = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password
       });
@@ -34,13 +41,7 @@ router.post('/register', (req, res) => {
           newUser.password = hash;
           newUser
               .save()
-              .then(user =>
-                  res.status(201).json({
-                      user,
-                      msg: 'You have successfully registered a user',
-                  })
-              )
-              // eslint-disable-next-line no-console
+              .then(user => res.status(201).json({user, msg:'You have succesfully registered a user'}))
               .catch(err => console.log(err));
         });
       });
@@ -61,7 +62,10 @@ router.post('/login', async (req, res) => {
 
   const email = req.body.email;
   const password = req.body.password;
+
+  // Find user by email
   await User.findOne({ email }).then(user => {
+    // Check for user
     if (!user) {
       errors.email = 'User not found';
       return res.status(404).json(errors);
@@ -70,25 +74,20 @@ router.post('/login', async (req, res) => {
     // Check Password
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        // Password Matched
-        const payload = {
-          id: user.id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName
-        }; // Create JWT Payload
+        // User Matched
+        const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
 
         // Sign Token
         jwt.sign(
-          payload,
-          keys.JWT_SECRET,
-          { expiresIn: 3600 },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: 'Bearer ' + token
-            });
-          }
+            payload,
+            keys.JWT_SECRET,
+            { expiresIn: 3600 },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: 'Bearer ' + token
+              });
+            }
         );
       } else {
         errors.password = 'Password incorrect';
@@ -101,14 +100,16 @@ router.post('/login', async (req, res) => {
 // @desc    Return current user
 // @access  Private
 router.get(
-  '/current',
-  passport.authenticate('jwt', { session: false }, null),
-  (req, res) => {
-    res.json({
-      email: req.user.email,
-      msg: 'success'
-    });
-  }
+    "/current",
+    passport.authenticate("jwt", { session: false }, null),
+    (req, res) => {
+      res.json({
+        id: req.user.id,
+        username: req.user.username,
+        email: req.user.email,
+        msg: "success"
+      });
+    }
 );
 
 module.exports = router;
