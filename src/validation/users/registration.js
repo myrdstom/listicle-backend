@@ -6,25 +6,16 @@ const regex = /^(?=(.*[\W])+)(?=(.*?[A-Z])+)(?!.*\s).{7,32}$/;
 
 module.exports = function validateRegisterInput(data) {
     let errors = {};
-    data.firstName = !isEmpty(data.firstName) ? data.firstName : '';
-    data.lastName = !isEmpty(data.lastName) ? data.lastName : '';
     data.password = !isEmpty(data.password) ? data.password : '';
     data.confirmPassword = !isEmpty(data.confirmPassword)
         ? data.confirmPassword
         : '';
-    if (!Validator.isLength(data.firstName, { min: 2, max: 30 })) {
-        errors.firstName = ['First name must be between 2 and 30 characters'];
-    }
-    if (!Validator.isLength(data.lastName, { min: 2, max: 30 })) {
-        errors.lastName = ['Last name must be between 2 and 30 characters'];
+    data.username = !isEmpty(data.username) ? data.username : '';
+
+    if (Validator.isEmpty(data.username)) {
+        errors.username = ['Username is required'];
     }
 
-    if (Validator.isEmpty(data.firstName)) {
-        errors.firstName = ['First Name is required'];
-    }
-    if (Validator.isEmpty(data.lastName)) {
-        errors.lastName = ['Last Name is required'];
-    }
     if (!Validator.isEmail(data.email)) {
         errors.email = ['Email is invalid'];
     }

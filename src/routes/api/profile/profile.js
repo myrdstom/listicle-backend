@@ -37,8 +37,10 @@ router.post(
         // Get fields
         const profileFields = {};
         profileFields.user = req.user.id;
-        if (req.body.username) profileFields.username = req.body.username;
+        // if (req.body.username) profileFields.username = req.body.username;
         if (req.body.bio) profileFields.bio = req.body.bio;
+        if (req.body.firstName) profileFields.firstName = req.body.firstName;
+        if (req.body.firstName) profileFields.lastName = req.body.lastName;
         // Social
         profileFields.social = {};
         if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
@@ -58,12 +60,8 @@ router.post(
                 // Create
 
                 // Check if username exists
-                Profile.findOne({ username: profileFields.username }).then(
+                Profile.findOne({ user: profileFields.user }).then(
                     profile => {
-                        if (profile) {
-                            errors.username = 'That username already exists';
-                            res.status(400).json(errors);
-                        }
                         // Save profile
                         new Profile(profileFields)
                             .save()
