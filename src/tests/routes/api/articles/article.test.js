@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../../../app');
 const Article = require('../../../../models/Article');
+const User = require('../../../../models/User');
 const mongoose = require('mongoose');
 
 describe('Tests for validating the create articles feature', () => {
@@ -11,14 +12,14 @@ describe('Tests for validating the create articles feature', () => {
 
     beforeEach(async () => {
         await Article.deleteMany();
+        await User.deleteMany();
         await request(app)
             .post(userApiBase + '/register')
             .send({
+                username: 'myrdstom',
                 email: 'nserekopaul@gmail.com',
                 password: 'P@ssw0rd',
                 confirmPassword: 'P@ssw0rd',
-                firstName: 'Paul',
-                lastName: 'Kayongo',
             });
         res = await request(app)
             .post(userApiBase + '/login')
@@ -45,6 +46,7 @@ describe('Tests for validating the create articles feature', () => {
             })
             .expect(201);
     });
+
     it('Should successfully get all articles', async () => {
         await request(app)
             .post(articleApiBase + '/')
@@ -68,6 +70,7 @@ describe('Tests for validating the create articles feature', () => {
             .expect(200);
         expect(response.body[0].title).toBe('Javascript');
     });
+
     it('Should successfully get all articles', async () => {
         await request(app)
             .post(articleApiBase + '/')
@@ -324,5 +327,57 @@ describe('Tests for validating the create articles feature', () => {
             .post(articleApiBase + '/undislike/javascript')
             .set('Authorization', `${access_token}`)
             .expect(201);
+    });
+    it('Should successfully add a comment', async () => {
+        await request(app)
+            .post(articleApiBase + '/')
+            .set('Authorization', `${access_token}`)
+            .send({
+                title: 'Javascript',
+                body:
+                    'Javascript is an extremely awesome language, I do not know what I would',
+                description: 'This is how javascript is amazing',
+            })
+            .expect(201);
+        await request(app)
+            .post(articleApiBase + '/comment/javascript')
+            .set('Authorization', `${access_token}`)
+            .send({
+                "body": "Well Python is not as awesome as javascript"
+            })
+            .expect(200);
+    });
+    it('Should successfully return an error when you try to delete a comment froma non-existent article', async () => {
+        await request(app)
+            .post(articleApiBase + '/')
+            .set('Authorization', `${access_token}`)
+            .send({
+                title: 'Javascript',
+                body:
+                    'Javascript is an extremely awesome language, I do not know what I would',
+                description: 'This is how javascript is amazing',
+            })
+            .expect(201);
+        await request(app)
+            .delete(articleApiBase + '/comment/javascript2/5678w3657w')
+            .set('Authorization', `${access_token}`)
+            .expect(404);
+    });
+    it('Should successfully return an error when you try to delete a non-existent comment', async () => {
+        await request(app)
+            .post(articleApiBase + '/')
+            .set('Authorization', `${access_token}`)
+            .send({
+                title: 'Javascript',
+                body:
+                    'Javascript is an extremely awesome language, I do not know what I would',
+                description: 'This is how javascript is amazing',
+            })
+            .expect(201);
+        const response = await request(app)
+            .delete(articleApiBase + '/comment/javascript/5678w3657w')
+            .set('Authorization', `${access_token}`)
+            .expect(404);
+        expect(response.body.error).toBe('Comment does not exist');
     });
 });
