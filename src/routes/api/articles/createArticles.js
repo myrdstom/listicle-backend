@@ -55,7 +55,7 @@ router.post(
             title: req.body.title,
             description: req.body.description,
             body: req.body.body,
-            author: req.user.firstName + ' ' + req.user.lastName,
+            author: req.user.username,
             user: req.user.id,
         });
         newArticle.save().then(article => res.status(201).json(article));
@@ -109,11 +109,9 @@ router.post(
                             like => like.user.toString() === req.user.id
                         ).length > 0
                     ) {
-                        return res
-                            .status(400)
-                            .json({
-                                error: 'You have already liked this post',
-                            });
+                        return res.status(400).json({
+                            error: 'You have already liked this post',
+                        });
                     }
                     const removeIndex = article.dislikes
                         .map(item => item.user.toString())
@@ -147,11 +145,9 @@ router.post(
                             like => like.user.toString() === req.user.id
                         ).length === 0
                     ) {
-                        return res
-                            .status(400)
-                            .json({
-                                error: 'You have not yet liked this article',
-                            });
+                        return res.status(400).json({
+                            error: 'You have not yet liked this article',
+                        });
                     }
                     const removeIndex = article.likes
                         .map(item => item.user.toString())
@@ -184,11 +180,9 @@ router.post(
                             like => like.user.toString() === req.user.id
                         ).length > 0
                     ) {
-                        return res
-                            .status(400)
-                            .json({
-                                error: 'You have already disliked this post',
-                            });
+                        return res.status(400).json({
+                            error: 'You have already disliked this post',
+                        });
                     }
                     const removeIndex = article.likes
                         .map(item => item.user.toString())
@@ -222,11 +216,9 @@ router.post(
                             like => like.user.toString() === req.user.id
                         ).length === 0
                     ) {
-                        return res
-                            .status(400)
-                            .json({
-                                error: 'You have not yet disliked this article',
-                            });
+                        return res.status(400).json({
+                            error: 'You have not yet disliked this article',
+                        });
                     }
                     const removeIndex = article.dislikes
                         .map(item => item.user.toString())
@@ -240,6 +232,60 @@ router.post(
                     res.status(404).json({ error: 'article not found' })
                 );
         });
+    }
+);
+
+//@route    POST api/users/articles/comment/slug
+// @desc    Add comment to  article
+// @access  Private
+router.post(
+    '/comment/:articleSlug',
+    passport.authenticate('jwt', { session: false }, null),
+    (req, res) => {
+        Article.findOne({ articleSlug: req.params.articleSlug })
+            .then(article => {
+                const newComment = {
+                    body: req.body.body,
+                    name: req.user.username,
+                    avatar: req.body.avatar,
+                    user: req.user.id,
+                };
+                article.comments.unshift(newComment);
+                article.save().then(article => res.status(200).json(article));
+            })
+            .catch(err =>
+                res.status(404).json({ error: 'article not found ' })
+            );
+    }
+);
+
+//@route    DELETE api/users/articles/comment/slug/:comment_id
+// @desc    Remove Comment
+// @access  Private
+router.delete(
+    '/comment/:articleSlug/:id',
+    passport.authenticate('jwt', { session: false }, null),
+    (req, res) => {
+        Article.findOne({ articleSlug: req.params.articleSlug })
+            .then(article => {
+                if (
+                    article.comments.filter(
+                        comment =>
+                            comment._id.toString() === req.params.id
+                    ).length === 0
+                ) {
+                    return res
+                        .status(404)
+                        .json({ error: 'Comment does not exist' });
+                }
+                const removeIndex = article.comments.map(item =>
+                    item._id.toString()).indexOf(req.params.id);
+                article.comments.splice(removeIndex, 1);
+                article.save().then(article => res.status(201).json({msg:'Comment successfully deleted'}));
+            })
+            .catch(err =>
+                res.status(404).json({ error: 'article not found ' })
+            );
     }
 );
 
