@@ -90,7 +90,7 @@ router.post('/login', async (req, res) => {
             }
         );
       } else {
-        errors.password = 'Password incorrect';
+        errors.password = 'Incorrect Password';
         return res.status(400).json(errors);
       }
     });

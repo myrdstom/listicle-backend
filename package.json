@@ -20,6 +20,9 @@
     "url": "https://github.com/myrdstom/authors-haven-backend/issues"
   },
   "homepage": "https://github.com/myrdstom/authors-haven-backend#readme",
+  "engines": {
+    "node": "10.15.1"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
