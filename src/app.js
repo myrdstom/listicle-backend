@@ -4,6 +4,7 @@ const express = require('express');
 require('./db/mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cors = require('cors');
 
 const users = require('./routes/api/users/users');
 const profile = require('./routes/api/profile/profile');
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 //Passport middleware
 app.use(passport.initialize());
+app.use(cors());
 
 //Passport Config. This is the passport strategy. Can be a local auth strategy, google auth strategy e.t.c
 require('./utils/passport')(passport);

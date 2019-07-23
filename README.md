@@ -1,11 +1,10 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d9eab63c8846d4b66105/maintainability)](https://codeclimate.com/github/myrdstom/listicle-backend/maintainability)
 [![Build Status](https://travis-ci.org/myrdstom/listicle-backend.svg?branch=develop)](https://travis-ci.org/myrdstom/listicle-backend)
 [![Coverage Status](https://coveralls.io/repos/github/myrdstom/listicle-backend/badge.svg?branch=develop)](https://coveralls.io/github/myrdstom/listicle-backend?branch=develop)
-# Authors Haven
-## Vision
-Create a community of like minded authors to foster inspiration and innovation by leveraging the modern web.
+# Listicle
+A simple blogging app
 
-##Hosting
+## Hosting
 
 This application is hosted at this [link](https://listicle-backend.herokuapp.com/api/articles)
 
