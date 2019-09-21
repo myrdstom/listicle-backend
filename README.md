@@ -20,7 +20,7 @@ This application is hosted at this [link](https://listicle-backend.herokuapp.com
     yarn install
     ```
 
-- Add a config file in the root of the folder with two files, `dev.env` and `test.env`
+- Add a config folder in the root of the folder with two files, `dev.env` and `test.env`
 
 - Populate both files with appropriate data using the `.env.example file as a template`
 
