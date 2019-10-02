@@ -1,52 +1,37 @@
-const express = require('express');
-const passport = require('passport');
-const Article = require('../../../models/Article');
-const Profile = require('../../../models/Profile');
-const router = express.Router();
-const ValidateArticleInput = require('../../../validation/articles/articles');
+import Article from '../models/Article';
+import Profile from '../models/Profile';
+import ValidateArticleInput from '../validation/articles/articles';
 
-//@route    GET api/users/articles
-// @desc    View all articles
-// @access  Public
-router.get('/', (req, res) => {
-    const errors = {};
-    Article.find()
-        .sort({ createdAt: -1 })
-        .then(articles => {
-            if (articles.length === 0) {
-                errors.error = 'This database has no articles';
-                return res.status(200).json(errors);
+const errors = {};
+class ArticleController {
+    static async getArticles(req,res){
+
+        Article.find()
+            .sort({ createdAt: -1 })
+            .then(articles => {
+                if (articles.length === 0) {
+                    errors.error = 'This database has no articles';
+                    return res.status(200).json(errors);
+                }
+                res.json(articles);
+            });
+
+    }
+
+    static async getSingleArticle(req, res, next){
+        await Article.findOne({ articleSlug: req.params.articleSlug }).then(
+            article => {
+                if (!article) {
+                    errors.error = 'This article does not exist';
+                    return res.status(404).json(errors);
+                }
+                res.status(200).json(article);
             }
-            res.json(articles);
-        });
-});
+        );
 
-/*
-@route    GET api/articles/slug
-@desc    Get a single article
-@access  Public
-*/
-router.get('/:articleSlug', async (req, res) => {
-    const errors = {};
-    await Article.findOne({ articleSlug: req.params.articleSlug }).then(
-        article => {
-            if (!article) {
-                errors.error = 'This article does not exist';
-                return res.status(404).json(errors);
-            }
-            res.status(200).json(article);
-        }
-    );
-});
+    }
 
-//@route    POST api/users/articles
-// @desc    Create article
-// @access  Private
-
-router.post(
-    '/',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    static async createArticle(req, res){
         const { errors, isValid } = ValidateArticleInput(req.body);
         if (!isValid) {
             res.status(400).json(errors);
@@ -59,17 +44,10 @@ router.post(
             user: req.user.id,
         });
         newArticle.save().then(article => res.status(201).json(article));
+
     }
-);
 
-//@route    DELETE api/users/articles/SLUG
-// @desc    DELETE article
-// @access  Private
-
-router.delete(
-    '/:articleSlug',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    static async deleteArticle(req, res) {
         Profile.findOne({ user: req.user.id }).then(profile => {
             Article.findOne({ articleSlug: req.params.articleSlug })
                 .then(article => {
@@ -90,17 +68,10 @@ router.delete(
                     res.status(404).json({ error: 'article not found' })
                 );
         });
+
     }
-);
 
-//@route    POST api/users/articles/like/:slug
-// @desc    Like article
-// @access  Private
-
-router.post(
-    '/like/:articleSlug',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    static async likeArticle(req, res) {
         Profile.findOne({ user: req.user.id }).then(profile => {
             Article.findOne({ articleSlug: req.params.articleSlug })
                 .then(article => {
@@ -127,16 +98,9 @@ router.post(
                 );
         });
     }
-);
 
-//@route    POST api/users/articles/dislike/:slug
-// @desc    unlike article
-// @access  Private
 
-router.post(
-    '/unlike/:articleSlug',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    static async unlikeArticle(req, res) {
         Profile.findOne({ user: req.user.id }).then(profile => {
             Article.findOne({ articleSlug: req.params.articleSlug })
                 .then(article => {
@@ -161,17 +125,10 @@ router.post(
                     res.status(404).json({ error: 'article not found' })
                 );
         });
+
     }
-);
 
-//@route    POST api/users/articles/like/:slug
-// @desc    Like article
-// @access  Private
-
-router.post(
-    '/dislike/:articleSlug',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    static async dislikeArticle(req, res) {
         Profile.findOne({ user: req.user.id }).then(profile => {
             Article.findOne({ articleSlug: req.params.articleSlug })
                 .then(article => {
@@ -198,16 +155,8 @@ router.post(
                 );
         });
     }
-);
 
-//@route    POST api/users/articles/dislike/:slug
-// @desc    unlike article
-// @access  Private
-
-router.post(
-    '/undislike/:articleSlug',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    static async undislikeArticle(req, res) {
         Profile.findOne({ user: req.user.id }).then(profile => {
             Article.findOne({ articleSlug: req.params.articleSlug })
                 .then(article => {
@@ -233,15 +182,8 @@ router.post(
                 );
         });
     }
-);
 
-//@route    POST api/users/articles/comment/slug
-// @desc    Add comment to  article
-// @access  Private
-router.post(
-    '/comment/:articleSlug',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    static async commentOnArticle(req, res) {
         Article.findOne({ articleSlug: req.params.articleSlug })
             .then(article => {
                 const newComment = {
@@ -256,16 +198,10 @@ router.post(
             .catch(err =>
                 res.status(404).json({ error: 'article not found ' })
             );
-    }
-);
 
-//@route    DELETE api/users/articles/comment/slug/:comment_id
-// @desc    Remove Comment
-// @access  Private
-router.delete(
-    '/comment/:articleSlug/:id',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    }
+
+    static async deleteComment(req, res) {
         Article.findOne({ articleSlug: req.params.articleSlug })
             .then(article => {
                 if (
@@ -287,6 +223,7 @@ router.delete(
                 res.status(404).json({ error: 'article not found ' })
             );
     }
-);
 
-module.exports = router;
+}
+
+export default ArticleController

@@ -1,16 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const ValidateProfileInput = require('../../../validation/profile/profile');
-const Profile = require('../../../models/Profile');
+import passport from 'passport';
+import ValidateProfileInput from '../validation/profile/profile';
+import Profile from '../models/Profile';
 
-//@route    GET api/profile/
-// @desc    Get current user's profile
-// @access  Private
-router.get(
-    '/',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+class ProfileController{
+    static async getProfile(req,res){
         const errors = {};
         Profile.findOne({ user: req.user.id }).then(profile => {
             if (!profile) {
@@ -18,17 +11,11 @@ router.get(
                 return res.status(404).json(errors);
             }
             res.json(profile);
-        });
-    }
-);
+        })
 
-//@route    POST api/profile/
-// @desc    Create and Edit current user's profile
-// @access  Private
-router.post(
-    '/',
-    passport.authenticate('jwt', { session: false }, null),
-    (req, res) => {
+    }
+
+    static async createProfile(req,res){
         const { errors, isValid } = ValidateProfileInput(req.body);
         //Check Validation
         if (!isValid) {
@@ -71,6 +58,7 @@ router.post(
             }
         });
     }
-);
 
-module.exports = router;
+}
+
+export default ProfileController
