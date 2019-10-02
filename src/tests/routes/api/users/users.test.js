@@ -1,11 +1,11 @@
 const request = require('supertest');
-const app = require('../../../../app');
-const User = require('../../../../models/User');
-const mongoose = require('mongoose');
+import app from '../../../../index'
+import User from '../../../../models/User';
+import 'mongoose';
 
 describe('Tests for user registration', () => {
     process.env.API_BASE = '/api';
-    const apiBase = process.env.API_BASE + '/users';
+    const apiBase = process.env.API_BASE;
 
     beforeEach(async () => {
         await User.deleteMany();
@@ -60,7 +60,7 @@ describe('Tests for user registration', () => {
         expect(response.body.success).toBe(true);
     });
     it('Should return the logged in user ', async () => {
-        res = await request(app)
+        const res = await request(app)
             .post(apiBase + '/login')
             .send({
                 email: 'nserekopaul@gmail.com',
