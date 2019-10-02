@@ -1,12 +1,12 @@
 const request = require('supertest');
-const app = require('../../../../app');
-const Article = require('../../../../models/Article');
-const User = require('../../../../models/User');
+import app from '../../../../index';
+import Article from '../../../../models/Article';
+import User from '../../../../models/User';
 const mongoose = require('mongoose');
 
 describe('Tests for validating the create articles feature', () => {
     process.env.API_BASE = '/api';
-    const userApiBase = process.env.API_BASE + '/users';
+    const userApiBase = process.env.API_BASE;
     const articleApiBase = process.env.API_BASE + '/articles';
     let access_token;
 
@@ -21,7 +21,7 @@ describe('Tests for validating the create articles feature', () => {
                 password: 'P@ssw0rd',
                 confirmPassword: 'P@ssw0rd',
             });
-        res = await request(app)
+        const res = await request(app)
             .post(userApiBase + '/login')
             .send({
                 email: 'nserekopaul@gmail.com',
@@ -60,33 +60,11 @@ describe('Tests for validating the create articles feature', () => {
             .expect(201);
         const response = await request(app)
             .get(articleApiBase + '/')
-            .set('Authorization', `${access_token}`)
-            .send({
-                title: 'Javascript',
-                body:
-                    'Javascript is an extremely awesome language, I do not know what I would',
-                description: 'This is how javascript is amazing',
-            })
             .expect(200);
         expect(response.body[0].title).toBe('Javascript');
     });
 
-    it('Should successfully get all articles', async () => {
-        await request(app)
-            .post(articleApiBase + '/')
-            .set('Authorization', `${access_token}`)
-            .send({
-                title: 'Javascript',
-                body:
-                    'Javascript is an extremely awesome language, I do not know what I would',
-                description: 'This is how javascript is amazing',
-            })
-            .expect(201);
-        const response = await request(app)
-            .get(articleApiBase + '/javascript')
-            .expect(200);
-        expect(response.body.articleSlug).toBe('javascript');
-    });
+
     it('Should return a message if the user tries to access a non-existent article', async () => {
         const response = await request(app)
             .get(articleApiBase + '/javascript')
@@ -97,7 +75,7 @@ describe('Tests for validating the create articles feature', () => {
         const response = await request(app)
             .get(articleApiBase + '/')
             .expect(200);
-        expect(response.body.error).toBe('This database has no articles');
+        expect(response.body.error).toBe('There are no articles');
     });
     it('Should successfully delete an article', async () => {
         await request(app)
@@ -378,6 +356,6 @@ describe('Tests for validating the create articles feature', () => {
             .delete(articleApiBase + '/comment/javascript/5678w3657w')
             .set('Authorization', `${access_token}`)
             .expect(404);
-        expect(response.body.error).toBe('Comment does not exist');
+        expect(response.body.message).toBe('Resource not found');
     });
 });
