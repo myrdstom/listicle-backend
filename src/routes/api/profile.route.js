@@ -1,7 +1,9 @@
 import passport from 'passport';
 import { Router } from 'express';
 import ProfileController from '../../controllers/profile';
-import router from './articles';
+
+
+const router = Router();
 
 router.get(
     '/',

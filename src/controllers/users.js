@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-
+const keys = process.env;
 import validateRegisterInput from '../validation/users/registration';
 import validateLoginInput from '../validation/users/login';
 import User from '../models/User';

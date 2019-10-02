@@ -1,13 +1,11 @@
 // app.js
-
-const express = require('express');
-require('./db/mongoose');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-
-const users = require('./routes/api/users/users');
-const profile = require('./routes/api/profile/profile');
-const articles = require('./routes/api/articles/createArticles');
+import '@babel/polyfill';
+import express from 'express';
+import bodyParser from 'body-parser';
+import passport from 'passport';
+import './db/mongoose'
+import cors from 'cors';
+import router from './routes';
 
 const app = express();
 
@@ -21,9 +19,16 @@ app.use(passport.initialize());
 //Passport Config. This is the passport strategy. Can be a local auth strategy, google auth strategy e.t.c
 require('./utils/passport')(passport);
 
-// Use Routes
-app.use('/api/users', users);
-app.use('/api/profile', profile);
-app.use('/api/articles', articles);
 
-module.exports = app;
+// Use Routes
+
+app.use(router);
+
+app.use((req, res, next) =>{
+    return res.status(404).json({
+        message:'Resource not found',
+        status: false
+    })
+})
+
+export default app;
