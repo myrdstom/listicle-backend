@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 require('mongoose-type-url');
 
@@ -39,4 +39,7 @@ const ProfileSchema = new Schema({
   }
 });
 
-module.exports = Profile = mongoose.model('profiles', ProfileSchema);
+let Profile =  mongoose.model('profiles', ProfileSchema);
+
+export default Profile;
+

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const slug = require('mongoose-slug-generator');
-require('mongoose-type-url');
+import mongoose from 'mongoose';
+import slug from 'mongoose-slug-generator';
+import 'mongoose-type-url';
 mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
@@ -70,5 +70,6 @@ const ArticleSchema = new Schema({
     default: Date.now
   }
 });
+let Article =  mongoose.model('articles', ArticleSchema);
 
-module.exports = Article = mongoose.model('articles', ArticleSchema);
+export default Article;
