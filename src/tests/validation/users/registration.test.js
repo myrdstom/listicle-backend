@@ -1,11 +1,11 @@
 const request = require('supertest');
-const app = require('../../../app');
-const User = require('../../../models/User');
+import app from '../../../index';
+import User from '../../../models/User';
 const mongoose = require('mongoose');
 
 describe('Tests for validating the user registration data', () => {
     process.env.API_BASE = '/api';
-    const apiBase = process.env.API_BASE + '/users';
+    const apiBase = process.env.API_BASE ;
 
     beforeEach(async () => {
         await User.deleteMany();

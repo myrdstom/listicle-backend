@@ -24,6 +24,10 @@ This application is hosted at this [link](https://listicle-backend.herokuapp.com
 
 - Populate both files with appropriate data using the `.env.example file as a template`
 
+## Notes
+Running `heroku config:set NPM_CONFIG_PRODUCTION=false --app listicle-baceknd` at the moment to use babel-node on heroku. 
+Will have to fix this on proper production and trim the `Procfile` to a proper production `Procfile` as per previous repos
+
 ## Api Spec
 
 ### Errors and Status Codes

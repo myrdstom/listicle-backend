@@ -1,13 +1,13 @@
 const request = require('supertest');
-const app = require('../../../../app');
-const Profile = require('../../../../models/Profile');
-const User = require('../../../../models/User');
+import app from '../../../../index';
+import Profile from '../../../../models/Profile';
+import User from '../../../../models/User';
 const mongoose = require('mongoose');
 
 describe('Tests for managing the user profile', () => {
     process.env.API_BASE = '/api';
-    const userApiBase = process.env.API_BASE + '/users';
-    const profileApiBase = process.env.API_BASE + '/profile';
+    const userApiBase = process.env.API_BASE;
+    const profileApiBase = process.env.API_BASE + '/profiles';
     let access_token;
 
     beforeEach(async () => {
@@ -21,7 +21,7 @@ describe('Tests for managing the user profile', () => {
                 password: 'P@ssw0rd',
                 confirmPassword: 'P@ssw0rd',
             });
-        res = await request(app)
+        const res = await request(app)
             .post(userApiBase + '/login')
             .send({
                 email: 'nserekopaul@gmail.com',
