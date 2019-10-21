@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import passport from 'passport';
 import ArticleController from '../../controllers/articles';
+import LikesAndDislikesController from '../../controllers/likes&dislikes';
+import CommentController from '../../controllers/comments';
 
 
 const router = Router();
@@ -27,36 +29,36 @@ router.delete(
 router.post(
     '/like/:articleSlug',
     passport.authenticate('jwt', { session: false }, null),
-    ArticleController.likeArticle
+    LikesAndDislikesController.likeArticle
 );
 
 router.post(
     '/unlike/:articleSlug',
     passport.authenticate('jwt', { session: false }, null),
-    ArticleController.unlikeArticle
+    LikesAndDislikesController.unlikeArticle
 );
 
 router.post(
     '/dislike/:articleSlug',
     passport.authenticate('jwt', { session: false }, null),
-    ArticleController.dislikeArticle
+    LikesAndDislikesController.dislikeArticle
 );
 router.post(
     '/undislike/:articleSlug',
     passport.authenticate('jwt', { session: false }, null),
-    ArticleController.undislikeArticle
+    LikesAndDislikesController.undislikeArticle
 );
 
 router.post(
     '/comment/:articleSlug',
     passport.authenticate('jwt', { session: false }, null),
-    ArticleController.commentOnArticle
+    CommentController.commentOnArticle
 );
 
 router.post(
     '/comment/:articleSlug/:id',
     passport.authenticate('jwt', { session: false }, null),
-    ArticleController.deleteComment
+    CommentController.deleteComment
 );
 
 
