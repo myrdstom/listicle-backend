@@ -17,7 +17,6 @@ class ArticleController {
             });
     }
 
-
     static async getSingleArticle(req, res, next) {
         await Article.findOne({ articleSlug: req.params.articleSlug }).then(
             article => {
