@@ -65,6 +65,7 @@ class AuthenticationController{
             bcrypt.compare(password, user.password).then(isMatch => {
                 if (isMatch) {
                     // User Matched
+
                     const payload = { id: user.id, username: user.username, email: user.email }; // Create JWT Payload
 
                     // Sign Token
