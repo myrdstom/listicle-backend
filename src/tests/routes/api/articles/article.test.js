@@ -60,33 +60,11 @@ describe('Tests for validating the create articles feature', () => {
             .expect(201);
         const response = await request(app)
             .get(articleApiBase + '/')
-            .set('Authorization', `${access_token}`)
-            .send({
-                title: 'Javascript',
-                body:
-                    'Javascript is an extremely awesome language, I do not know what I would',
-                description: 'This is how javascript is amazing',
-            })
             .expect(200);
         expect(response.body[0].title).toBe('Javascript');
     });
 
-    it('Should successfully get all articles', async () => {
-        await request(app)
-            .post(articleApiBase + '/')
-            .set('Authorization', `${access_token}`)
-            .send({
-                title: 'Javascript',
-                body:
-                    'Javascript is an extremely awesome language, I do not know what I would',
-                description: 'This is how javascript is amazing',
-            })
-            .expect(201);
-        const response = await request(app)
-            .get(articleApiBase + '/javascript')
-            .expect(200);
-        expect(response.body.articleSlug).toBe('javascript');
-    });
+
     it('Should return a message if the user tries to access a non-existent article', async () => {
         const response = await request(app)
             .get(articleApiBase + '/javascript')
@@ -97,7 +75,7 @@ describe('Tests for validating the create articles feature', () => {
         const response = await request(app)
             .get(articleApiBase + '/')
             .expect(200);
-        expect(response.body.error).toBe('This database has no articles');
+        expect(response.body.error).toBe('There are no articles');
     });
     it('Should successfully delete an article', async () => {
         await request(app)
