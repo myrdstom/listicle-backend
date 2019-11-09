@@ -22,17 +22,6 @@ const ProfileSchema = new Schema({
   avatar:{
     profile: mongoose.SchemaTypes.Url
   },
-  social: {
-    youtube: {
-      type: String
-    },
-    twitter: {
-      type: String
-    },
-    Instagram: {
-      type: String
-    }
-  },
   date: {
     type: Date,
     default: Date.now

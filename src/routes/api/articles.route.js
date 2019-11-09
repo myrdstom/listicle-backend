@@ -3,13 +3,16 @@ import passport from 'passport';
 import ArticleController from '../../controllers/articles';
 
 
+
 const router = Router();
 router.get(
     '/',
     ArticleController.getArticles
 );
+
+
 router.get(
-    '/:articleSlug',
+    '/:articleSlugs',
     ArticleController.getSingleArticle
 );
 router.post(

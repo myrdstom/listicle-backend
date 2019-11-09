@@ -14,26 +14,17 @@ module.exports = function validateProfileInput(data) {
         errors.lastName = ['Last name must be between 2 and 30 characters'];
     }
 
-    if (!isEmpty(data.youtube)) {
-        if (!Validator.isURL(data.youtube)) {
-            errors.youtube = ['Youtube field doe not have a valid URL'];
-        }
-    }
-    if (!isEmpty(data.twitter)) {
-        if (!Validator.isURL(data.twitter)) {
-            errors.twitter = ['Twitter field doe not have a valid URL'];
-        }
-    }
-    if (!isEmpty(data.instagram)) {
-        if (!Validator.isURL(data.instagram)) {
-            errors.instagram = ['Instagram field doe not have a valid URL'];
-        }
-    }
     if (!isEmpty(data.avatar)) {
         if (!Validator.isURL(data.avatar)) {
             errors.avatar = ['Avatar field doe not have a valid URL'];
         }
+
+        if(!data.avatar.match(/\.(jpg|jpeg|png)$/i)) {
+            errors.avatar = ['Please provide a link to an image'];
+        }
     }
+
+
 
     return {
         errors,

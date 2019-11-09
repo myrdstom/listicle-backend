@@ -1,3 +1,4 @@
+
 import Article from '../models/Article';
 import Profile from '../models/Profile';
 import ValidateArticleInput from '../validation/articles/articles';
@@ -9,7 +10,7 @@ class ArticleController {
             .sort({ createdAt: -1 })
             .then(articles => {
                 if (articles.length === 0) {
-                    errors.error = 'This database has no articles';
+                    errors.error = 'There are no articles';
                     return res.status(200).json(errors);
                 }
                 res.json(articles);

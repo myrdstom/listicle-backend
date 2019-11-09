@@ -41,10 +41,7 @@ describe('Tests for managing the user profile', () => {
                 bio: 'I am an awesome developer',
                 firstName: 'Paul',
                 lastName: 'Kayongo',
-                youtube: 'https://www.youtube.com/',
-                instagram: 'https://www.instagram.com/',
-                twitter: 'https://www.twitter.com/',
-                avatar: 'https://www.avatar.com/'
+                avatar: 'https://s3-us-west-1.amazonaws.com/co-directory-images/busulwa-peter-nsereko-12139020.jpg'
             })
             .expect(201);
         expect(response.body.bio).toBe('I am an awesome developer');
@@ -58,10 +55,7 @@ describe('Tests for managing the user profile', () => {
                 bio: 'I am an awesome developer',
                 firstName: 'Paul',
                 lastName: 'Kayongo',
-                youtube: 'https://www.youtube.com/',
-                instagram: 'https://www.instagram.com/',
-                twitter: 'https://www.twitter.com/',
-                avatar: 'https://www.avatar.com/'
+                avatar: 'https://s3-us-west-1.amazonaws.com/co-directory-images/busulwa-peter-nsereko-12139020.jpg'
             })
             .expect(201);
         const response = await request(app)
