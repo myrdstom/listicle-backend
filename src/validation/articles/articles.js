@@ -27,6 +27,12 @@ module.exports = function validateArticleInput(data) {
     if (Validator.isEmpty(data.body)) {
         errors.body = ['Body is required'];
     }
+
+    if (!isEmpty(data.articleURL)) {
+        if (!Validator.isURL(data.articleURL)) {
+            errors.avatar = ['Article URL field does not have a valid URL'];
+        }
+    }
     return {
         errors,
         isValid: isEmpty(errors)

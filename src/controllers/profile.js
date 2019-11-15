@@ -27,13 +27,8 @@ class ProfileController{
         // if (req.body.username) profileFields.username = req.body.username;
         if (req.body.bio) profileFields.bio = req.body.bio;
         if (req.body.firstName) profileFields.firstName = req.body.firstName;
-        if (req.body.firstName) profileFields.lastName = req.body.lastName;
-        // Social
-        profileFields.social = {};
-        if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-        if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-        if (req.body.instagram)
-            profileFields.social.instagram = req.body.instagram;
+        if (req.body.lastName) profileFields.lastName = req.body.lastName;
+        if (req.body.avatar) profileFields.avatar = req.body.avatar;
 
         Profile.findOne({ user: req.user.id }).then(profile => {
             if (profile) {

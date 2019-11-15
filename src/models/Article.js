@@ -33,6 +33,9 @@ const ArticleSchema = new Schema({
   avatar:{
     profile: mongoose.SchemaTypes.Url
   },
+  articleURL:{
+    profile: mongoose.SchemaTypes.Url
+  },
   likes:[
     {
       user: {
