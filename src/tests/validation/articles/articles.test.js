@@ -34,24 +34,14 @@ describe('Tests for validating the create articles feature', () => {
         mongoose.connection.close(done);
     });
 
-    it('Should return an error when a user tries to create an article with an inappropriate description', async () => {
+    it('Should return an error when a user tries to create an article with an inappropriate title', async () => {
         const response = await request(app)
             .post(articleApiBase + '/')
             .set('Authorization', `${access_token}`)
-            .send({ title: 'Javascript', body: 'narda', description: 'narda' })
+            .send({ title: 'J', body: 'Javascript is amazing', description: 'Javascript is amazing' })
             .expect(400);
-        expect(response.body.description[0]).toBe(
-            'Description be between 10 and 100 characters'
+        expect(response.body.title[0]).toBe(
+            'Title must be between 2 and 30 characters'
         );
     });
-    // it('Should return an error when a user tries to create an article with an inappropriate title', async () => {
-    //     const response = await request(app)
-    //         .post(articleApiBase + '/')
-    //         .set('Authorization', `${access_token}`)
-    //         .send({ title: 'J', body: 'Javascript is amazing', description: 'Javascript is amazing' })
-    //         .expect(400);
-    //     expect(response.body.title[0]).toBe(
-    //         'Title must be between 2 and 30 characters'
-    //     );
-    // });
 });

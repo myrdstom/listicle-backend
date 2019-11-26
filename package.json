@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/myrdstom/authors-haven-backend#readme",
   "engines": {
-    "node": "10.16.0"
+    "node": "12.14.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
@@ -29,6 +29,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "googleapis": "^49.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.14",
     "mongodb": "^3.2.3",
