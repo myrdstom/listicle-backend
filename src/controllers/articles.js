@@ -1,8 +1,7 @@
-
 import Article from '../models/Article';
 import Profile from '../models/Profile';
 import ValidateArticleInput from '../validation/articles/articles';
-
+import validateEditedArticleInput from '../validation/articles/editArticle';
 const errors = {};
 class ArticleController {
     static async getArticles(req, res) {
@@ -40,8 +39,45 @@ class ArticleController {
             body: req.body.body,
             author: req.user.username,
             user: req.user.id,
+            articleURL: req.body.articleURL,
         });
         newArticle.save().then(article => res.status(201).json(article));
+    }
+
+    static async editArticle(req, res) {
+        const { errors, isValid } = validateEditedArticleInput(req.body);
+        if (!isValid) {
+            res.status(400).json(errors);
+        }
+        const { title, description, body, articleURL } = req.body;
+        const loggedInUser = req.user.username;
+        Article.findOne({ articleSlug: req.params.articleSlug }).then(
+            article => {
+                if (article && article.author.toString() === loggedInUser) {
+                    const newArticle = Article.findOneAndUpdate({
+                        articleSlug: req.params.articleSlug,
+                        title: title || article.title,
+                        description: description || article.description,
+                        body: body || article.body,
+                        articleURL: articleURL || article.articleURL,
+                    }).then(article => {
+                        article
+                            .save()
+                            .then(article =>
+                                res
+                                    .status(201)
+                                    .json({
+                                        message: 'Article successfully updated',
+                                    })
+                            );
+                    });
+                } else {
+                    return res.status(404).json({
+                        err: 'You are not authorised to edit this article',
+                    });
+                }
+            }
+        );
     }
 
     static async deleteArticle(req, res) {
@@ -182,7 +218,7 @@ class ArticleController {
             .then(article => {
                 const newComment = {
                     body: req.body.body,
-                    name: req.user.username,
+                    username: req.user.username,
                     avatar: req.body.avatar,
                     user: req.user.id,
                 };

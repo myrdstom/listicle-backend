@@ -12,13 +12,19 @@ router.get(
 
 
 router.get(
-    '/:articleSlugs',
+    '/:articleSlug',
     ArticleController.getSingleArticle
 );
 router.post(
     '/',
     passport.authenticate('jwt', { session: false }, null),
     ArticleController.createArticle
+);
+
+router.put(
+    '/:articleSlug',
+    passport.authenticate('jwt', { session: false }, null),
+    ArticleController.editArticle
 );
 
 router.delete(
@@ -56,7 +62,7 @@ router.post(
     ArticleController.commentOnArticle
 );
 
-router.post(
+router.delete(
     '/comment/:articleSlug/:id',
     passport.authenticate('jwt', { session: false }, null),
     ArticleController.deleteComment
