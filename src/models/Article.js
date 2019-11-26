@@ -30,8 +30,8 @@ const ArticleSchema = new Schema({
   author:{
     type: String
   },
-  avatar:{
-    profile: mongoose.SchemaTypes.Url
+  articleURL:{
+    type: mongoose.SchemaTypes.Url
   },
   likes:[
     {
@@ -54,6 +54,9 @@ const ArticleSchema = new Schema({
       user: {
         type: Schema.Types.ObjectId,
         ref: 'users'
+      },
+      username: {
+        type: String
       },
       body: {
         type: String,

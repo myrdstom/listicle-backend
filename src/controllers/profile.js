@@ -27,7 +27,7 @@ class ProfileController{
         if (req.body.bio) profileFields.bio = req.body.bio;
         if (req.body.firstName) profileFields.firstName = req.body.firstName;
         if (req.body.lastName) profileFields.lastName = req.body.lastName;
-        if(req.body.avatar) profileFields.avatar = req.body.avatar;
+        if (req.body.avatar) profileFields.avatar = req.body.avatar;
         Profile.findOne({ user: req.user.id }).then(profile => {
             if (profile) {
                 //Update

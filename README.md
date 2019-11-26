@@ -12,7 +12,7 @@ This application is hosted at this [link](https://listicle-backend.herokuapp.com
 
  - Clone the repository using the following command
     ```
-    git clone https://github.com/myrdstom/listicle-backend.gi
+    git clone https://github.com/myrdstom/listicle-backend.git
     ```
 
 - Install all the necessary packages using the command below
