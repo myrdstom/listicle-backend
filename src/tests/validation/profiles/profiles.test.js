@@ -34,45 +34,6 @@ describe('Tests for validating the user profile feature', () => {
         await mongoose.connection.close(done);
     });
 
-    it('Should return an error when a user tries to create a profile when the youtube field is not a URL', async () => {
-        const response = await request(app)
-            .post(profileApiBase + '/')
-            .set('Authorization', `${access_token}`)
-            .send({
-                firstName: 'Paul',
-                lastName: 'Kayongo',
-                youtube:'yoyo'
-            })
-            .expect(400);
-        expect(response.body.youtube[0]).toBe('Youtube field doe not have a valid URL');
-    });
-
-    it('Should return an error when a user tries to create a profile when the twitter field is not a URL', async () => {
-        const response = await request(app)
-            .post(profileApiBase + '/')
-            .set('Authorization', `${access_token}`)
-            .send({
-                firstName: 'Paul',
-                lastName: 'Kayongo',
-                twitter:'yoyo'
-            })
-            .expect(400);
-        expect(response.body.twitter[0]).toBe('Twitter field doe not have a valid URL');
-    });
-
-    it('Should return an error when a user tries to create a profile when the instagram field is not a URL', async () => {
-        const response = await request(app)
-            .post(profileApiBase + '/')
-            .set('Authorization', `${access_token}`)
-            .send({
-                firstName: 'Paul',
-                lastName: 'Kayongo',
-                instagram:'yoyo'
-            })
-            .expect(400);
-        expect(response.body.instagram[0]).toBe('Instagram field doe not have a valid URL');
-    });
-
     it('Should return an error when a user tries to create a profile when the avatar field is not a URL', async () => {
         const response = await request(app)
             .post(profileApiBase + '/')
@@ -83,7 +44,7 @@ describe('Tests for validating the user profile feature', () => {
                 avatar:'yoyo'
             })
             .expect(400);
-        expect(response.body.avatar[0]).toBe('Avatar field doe not have a valid URL');
+        expect(response.body.avatar[0]).toBe('Please provide a link to an image');
     });
 
     it('Should return an error when the firstName is empty', async () => {
@@ -92,8 +53,7 @@ describe('Tests for validating the user profile feature', () => {
             .set('Authorization', `${access_token}`)
             .send({
                 firstName: '',
-                lastName: 'Kayongo',
-                youtube:'yoyo'
+                lastName: 'Kayongo'
             })
             .expect(400);
         expect(response.body.firstName[0]).toBe('First name must be between 2 and 30 characters');
@@ -104,8 +64,7 @@ describe('Tests for validating the user profile feature', () => {
             .set('Authorization', `${access_token}`)
             .send({
                 firstName: 'Paul',
-                lastName: '',
-                youtube:'yoyo'
+                lastName: ''
             })
             .expect(400);
         expect(response.body.lastName[0]).toBe('Last name must be between 2 and 30 characters');
