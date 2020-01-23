@@ -3,14 +3,14 @@
 // app.js
 import '@babel/polyfill';
 import express from 'express';
-const path = require('path');
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import './db/mongoose'
-import cors from 'cors';
+const cors = require('cors');
 import router from './routes';
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT;
 //Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,10 +36,6 @@ app.use((req, res, next) =>{
 
 
 if(process.env.NODE_ENV !== 'test') {
-  app.use(express.static('../client/build'));
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client','build', 'index.html'));
-  });
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
