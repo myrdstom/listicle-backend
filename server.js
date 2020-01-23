@@ -5,7 +5,7 @@ import '@babel/polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
-import './db/mongoose'
+import './src/db/mongoose'
 import cors from 'cors';
 import router from './routes';
 

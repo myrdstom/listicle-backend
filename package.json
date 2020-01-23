@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "env-cmd -f ./config/dev.env  nodemon --watch src --exec babel-node src/index.js",
-    "dev": "env-cmd -f ./config/dev.env  nodemon src/index.js",
+    "start": "env-cmd -f ./config/dev.env  nodemon --watch src --exec babel-node server.js",
+    "dev": "env-cmd -f ./config/dev.env  nodemon server.js",
     "test": "env-cmd -f ./config/test.env  jest --forceExit --detectOpenHandles --coverage",
     "travis": "jest  --forceExit --detectOpenHandles --coverage",
     "lint": "eslint src/"

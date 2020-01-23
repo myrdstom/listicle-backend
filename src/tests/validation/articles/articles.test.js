@@ -1,5 +1,5 @@
 const request = require('supertest');
-import app from '../../../index';
+import app from '../../../../index';
 import User from '../../../models/User';
 import Article from '../../../models/Article';
 const mongoose = require('mongoose');
