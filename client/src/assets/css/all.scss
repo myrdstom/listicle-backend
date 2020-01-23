@@ -1,0 +1,14 @@
+@import 'base/settings';
+@import 'base/base';
+@import 'components/header';
+@import 'components/notFoundPage';
+@import 'components/auth/auth';
+@import 'components/errors';
+@import 'components/toast';
+@import 'components/loader';
+@import 'components/articles/getArticles';
+@import 'components/articles/getArticle';
+@import 'components/articles/createArticle';
+@import 'components/footer';
+@import 'components/profile/profile';
+@import 'components/comments/comments';

@@ -1,0 +1,12 @@
+export const GET_ERRORS = 'GET_ERRORS';
+export const SET_CURRENT_USER = 'setCurrentUser';
+export const GET_PROFILE = 'GET_PROFILE';
+export const PROFILE_LOADING = 'PROFILE_LOADING';
+export const CLEAR_CURRENT_PROFILE = 'CLEAR_CURRENT_PROFILE';
+export const ARTICLE_LOADING = 'ARTICLE_LOADING';
+export const GET_ARTICLES = 'GET_ARTICLES';
+export const GET_ARTICLE = 'GET_ARTICLE';
+export const ADD_ARTICLE = 'ADD_ARTICLE';
+export const DELETE_ARTICLE = 'DELETE_ARTICLE';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+

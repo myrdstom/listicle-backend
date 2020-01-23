@@ -1,0 +1,141 @@
+.get__profile-container {
+  padding-top: 5%;
+  margin: 0 auto;
+
+}
+
+.create__profile-container{
+  padding-top: 5%;
+}
+
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  float: left;
+}
+
+.avatar-upload .avatar-preview {
+  width: 152px;
+  height: 152px;
+  position: relative;
+  border-radius: 100%;
+  border: 6px solid #F8F8F8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  background-image: url("/src/assets/images/avatar.png");
+}
+
+.profile__avatar {
+  width: 148px;
+  height: 142px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+
+
+.profile__details {
+  margin-left: 10%;
+  padding-left: 10%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.profile__element{
+  padding-right: 20%;
+  font-size: $small-font-size;
+  word-wrap: break-word;
+}
+
+.edit_button{
+  color: $dark-grey;
+}
+
+.update__profile{
+  color: $blue;
+  font-weight: bold;
+}
+
+
+// Camera icon on profile picture
+.icon{
+  opacity: 0;
+}
+
+.camera4{
+  display:block;
+  width:60%;
+  height:40%;
+  position:absolute;
+  top:30%;
+  left:22%;
+  background-color:#8c7e7d;
+  border-radius:5px;
+  border-style: solid;
+  border-color: #fff;
+  cursor: pointer;
+}
+
+.camera4:after{
+  content:"";
+  display:block;
+  width:40px;
+  height:40px;
+  border:7px solid #000;
+  position:absolute;
+  top:15%;
+  left:30%;
+  background-color:#000;
+  border-radius:25px;
+  cursor: pointer;
+
+}
+
+
+.camera4:before{
+  content:"";
+  display:block;
+  width:50%;
+  height:10px;
+  position:absolute;
+  top:-16%;
+  left:25%;
+  background-color:#8c7e7d;
+  border: solid #fff;
+  border-radius:10px;
+  cursor: pointer;
+}
+
+.icon:hover{
+  opacity: 0.6;
+  animation: fadein 2s;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+  -ms-animation: fadein 2s; /* Internet Explorer */
+  -o-animation: fadein 2s; /* Opera < 12.1 */
+
+}
+
+@keyframes fadein {
+  0% { opacity: 0; }
+  100%   { opacity: 0.6; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  0% { opacity: 0; }
+  100%   { opacity: 0.6; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 0.6; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 0.6; }
+}

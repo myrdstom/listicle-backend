@@ -1,0 +1,58 @@
+.error-message {
+  background: $dark-grey;
+  padding: 10px;
+  border-radius: 0 ;
+  position: relative;
+  display: inline-block;
+  box-shadow: 1px 1px 1px #aaaaaa;
+  margin-top: 10px;
+  -webkit-animation: ani 1s forwards;
+}
+
+.error-message:before{
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid $dark-grey;
+  position: absolute;
+  top: -10px;
+  -webkit-animation: ani 1s forwards;
+}
+@-webkit-keyframes ani {
+  89%  {opacity:1;height: 100px;}
+  90%  {opacity:0; height: 0;}
+  100%  {opacity:0; height: 0;}
+}
+
+
+.error-message{
+   -moz-animation: cssAnimation 0s ease-in 5s forwards;
+   /* Firefox */
+   -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+   /* Safari and Chrome */
+   -o-animation: cssAnimation 0s ease-in 5s forwards;
+   /* Opera */
+   animation: cssAnimation 0s ease-in 5s forwards;
+   -webkit-animation-fill-mode: forwards;
+   animation-fill-mode: forwards;
+
+ }
+@keyframes cssAnimation {
+  to {
+    width:0;
+    height:0;
+    padding: 0;
+    overflow:hidden;
+  }
+}
+@-webkit-keyframes cssAnimation {
+  to {
+    width:0;
+    height:0;
+    padding: 0;
+    visibility:hidden;
+  }
+}
+

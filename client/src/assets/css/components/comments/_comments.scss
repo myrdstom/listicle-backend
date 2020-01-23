@@ -1,0 +1,72 @@
+// View comments
+
+.comment__boundary {
+  margin-left: 23%;
+  max-width: 55%;
+  border: 0.5px solid;
+}
+
+.comments{
+  margin-left: 20%;
+  max-width: 90%;
+}
+
+.post__comment{
+  margin-left: 10%;
+  max-width: 800px;
+}
+
+.comment__username{
+  font-size: $small-font-size;
+  color: #4c59ed;
+
+}
+
+
+.comment__body{
+  font-size: $medium-font-size;
+}
+
+//  deleting a comment
+.delete__comment{
+  font-size: $small-font-size;
+
+}
+
+.delete__comment:hover{
+  cursor: pointer;
+
+}
+
+// posting a comment
+.comment__user{
+  font-size: $small-font-size;
+}
+
+.form-control.comment__input{
+  border: 0;
+}
+
+.form-control.comment__input:hover{
+  border: 0;
+}
+// comment  button
+.btn-outline-secondary {
+  font-family: Poppins, Helvetica, sans-serif;
+  font-size: $small-font-size;
+  color: $blue;
+  letter-spacing: 1px;
+  line-height: 15px;
+  border: 2px solid $blue;
+  border-radius: 40px;
+  background: transparent;
+  transition: all 0.3s ease 0s;
+  float:right;
+}
+
+.btn-outline-primary:hover {
+  text-decoration: none;
+  color: white;
+  background: $blue;
+  border: 2px solid $blue;
+}

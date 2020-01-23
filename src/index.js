@@ -3,6 +3,7 @@
 // app.js
 import '@babel/polyfill';
 import express from 'express';
+const path = require('path');
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import './db/mongoose'
@@ -35,6 +36,10 @@ app.use((req, res, next) =>{
 
 
 if(process.env.NODE_ENV !== 'test') {
+  app.use(express.static('../client/build'));
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client','build', 'index.html'));
+  });
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
